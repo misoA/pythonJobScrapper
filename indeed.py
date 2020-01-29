@@ -1,22 +1,19 @@
+import math
 import requests
 from bs4 import BeautifulSoup
 
 LIMIT = 50
-URL = f"https://www.indeed.com/jobs?q=python&limit={LIMIT}"
+URL = f"https://www.indeed.com/jobs?limit={LIMIT}"
 JOB_URL = "https://www.indeed.com/viewjob"
 
-def get_last_page():
-  result = requests.get(URL)
+def get_last_page(word):
+  result = requests.get(f"{URL}&q={word}")
   soup = BeautifulSoup(result.text, 'html.parser')
-  # print(soup.prettify())
 
-  links = soup.find("div", {"class":"pagination"}).find_all("a")
+  job_count = soup.find("div", {"id":"searchCountPages"}).get_text(strip=True)
+  job_count = int(job_count.split()[3].replace(",",""))
 
-  pages = []
-  for link in links[:-1]:
-    pages.append(int(link.string))
-  max_page = pages[-1]
-
+  max_page = math.ceil(job_count / LIMIT) if job_count > LIMIT else 1
   return max_page
 
 
@@ -44,9 +41,10 @@ def extract_job(html):
     "link" : f"{JOB_URL}?jk={job_id}"
   }
 
-def extract_jobs(last_pages):
+def extract_jobs(last_page):
+  print(f"Start scarpping {last_page} pages")
   jobs = []
-  for page in range(last_pages):
+  for page in range(last_page):
     print(f"Scrapping Indeed page:{page}")
     result = requests.get(f"{URL}&start={page * LIMIT}")
     soup = BeautifulSoup(result.text, 'html.parser')
@@ -56,7 +54,7 @@ def extract_jobs(last_pages):
       jobs.append(job)
   return jobs
 
-def get_jobs():
-  last_page = get_last_page();
+def get_jobs(word):
+  last_page = get_last_page(word);
   jobs = extract_jobs(last_page)
   return jobs

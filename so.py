@@ -1,11 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 
-URL = f"https://stackoverflow.com/jobs?q=python&sort=i"
+URL = f"https://stackoverflow.com/jobs?sort=i"
 JOB_URL = "https://stackoverflow.com/jobs"
 
-def get_last_page():
-  result = requests.get(URL)
+def get_last_page(word):
+  result = requests.get(f"{URL}&q={word}")
   soup = BeautifulSoup(result.text, "html.parser")
   pages = soup.find_all("a", {"class":"s-pagination--item"})
   last_page = int(pages[-2].find("span").get_text(strip=True))
@@ -26,6 +26,7 @@ def extract_job(html):
 
 
 def extract_jobs(last_page):
+  print(f"Start scarpping {last_page} pages")
   jobs = []
   for page in range(1, last_page+1):
     print(f"Scrapping SO page:{page}")
@@ -38,7 +39,7 @@ def extract_jobs(last_page):
   return jobs
 
 
-def get_jobs():
-  last_page = get_last_page();
+def get_jobs(word):
+  last_page = get_last_page(word);
   jobs = extract_jobs(last_page)
   return jobs
