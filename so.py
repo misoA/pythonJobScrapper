@@ -8,8 +8,10 @@ def get_last_page(word):
   result = requests.get(f"{URL}&q={word}")
   soup = BeautifulSoup(result.text, "html.parser")
   pages = soup.find_all("a", {"class":"s-pagination--item"})
-  last_page = int(pages[-2].find("span").get_text(strip=True))
-  return last_page
+  if len(pages) == 0:
+    return 0
+  else:
+    return int(pages[-2].find("span").get_text(strip=True))
   
 def extract_job(html):
   title = html.find("a", {"class":"s-link"})["title"]
@@ -41,5 +43,9 @@ def extract_jobs(last_page):
 
 def get_jobs(word):
   last_page = get_last_page(word);
-  jobs = extract_jobs(last_page)
+  jobs = []
+  if last_page == 0:
+    print('there is no job!, plz search another word!!')
+  else:
+    jobs = extract_jobs(last_page)
   return jobs
