@@ -1,8 +1,6 @@
 # pythonJobScrapper
-Make webScrapper which shows jobs
-
-You can search by specific word
-
+Make webScrapper which shows jobs. 
+You can search by specific word. 
 It makes csv file with jobs from stackoverflow and indeed
 
 
