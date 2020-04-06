@@ -9,7 +9,7 @@ db = {}
 
 @app.route("/")
 def home():
-    return render_template("potato.html")
+    return render_template("home.html")
 
 
 @app.route("/report")
