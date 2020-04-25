@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, send_file
-from so import get_jobs
+from so import get_jobs as get_so_jobs
+from rmo import get_jobs as get_rmo_jobs
+from wwr import get_jobs as get_wwr_jobs
 from save import save_to_file
 
 app = Flask("SuperScrapper")
@@ -21,7 +23,9 @@ def report():
         if existingJobs:
             jobs = existingJobs
         else:
-            jobs = get_jobs(word)
+            jobs = get_so_jobs(word)
+            jobs.extend(get_wwr_jobs(word))
+            jobs.extend(get_rmo_jobs(word))
             db[word] = jobs
         return render_template(
             "report.html", searchingBy=word, resultsNumber=len(jobs), jobs=jobs

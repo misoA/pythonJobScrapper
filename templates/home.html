@@ -2,12 +2,20 @@
 <html>
   <head>
     <title>Job Search</title>
+    <link href="https://andybrewer.github.io/mvp/mvp.css" rel="stylesheet"></link>
   </head>
   <body>
-    <h1>Job Search</h1>
-    <form action="/report" method="get">
-      <input placeholder="Which job do you want?" name="word" required />
-      <button>Search</button>
-    </form>
+    <header>
+      <h1>Remote Jobs</h1>
+    </header>
+    <main>
+      <article>
+        <form action="/report" method="get">
+          <h4>Search by term:</h4>
+          <input placeholder="i.e python" required name="word" required/>
+          <button type="submit">Find my job</button>
+        </form>
+      </article>
+    </main>
   </body>
 </html>

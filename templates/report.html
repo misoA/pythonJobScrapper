@@ -3,28 +3,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Job Search</title>
-    <style>
-      section {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-      }
-    </style>
+    <link href="https://andybrewer.github.io/mvp/mvp.css" rel="stylesheet"></link>
   </head>
   <body>
-    <h1>Search Results</h1>
-    <h3>Found {{resultsNumber}} You are looking for {{searchingBy}}</h3>
-    <a href="/export?word={{searchingBy}}">Export to CSV</a>
-    <section>
-      <h4>Title</h4>
-      <h4>Company</h4>
-      <h4>Location</h4>
-      <h4>Link</h4>
+    <header>
+      <h1>Remote Jobs</h1>
+      <h3>{{resultsNumber}} {{searchingBy}} jobs found.</h3>
+      <h4><a href="/export?word={{searchingBy}}">Export to CSV</a></h4>
+      <h5><a href="/">← Go back</a></h5>
+    </header>
+    <main>
       {% for job in jobs %}
-      <span>{{job.title}}</span>
-      <span>{{job.company}}</span>
-      <span>{{job.location}}</span>
-      <a href="{{job.link}}" target="_blank">Apply</a>
+        <div>
+            <h3>{{job.title}}</h3>
+            <h4>{{job.company}}</h4>
+            <h4><a href="{{job.link}}" target="_blank">Apply</a></h4>
+          <hr />
+        </div>
       {% endfor %}
-    </section>
+    </main>
   </body>
 </html>

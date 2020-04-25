@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-URL = f"https://stackoverflow.com/jobs?sort=i"
+URL = "https://stackoverflow.com/jobs?sort=i"
 JOB_URL = "https://stackoverflow.com/jobs"
 
 
