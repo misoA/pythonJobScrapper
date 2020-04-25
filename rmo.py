@@ -25,5 +25,4 @@ def get_jobs(word):
     if len(trs) > 0:
         for tr in trs:
             jobs.append(extract_job(tr))
-    print(jobs)
     return jobs
